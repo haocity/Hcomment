@@ -171,37 +171,37 @@
 			function $c(i){
 				return document.querySelector(i);
 			}
-			var ew=new Object;
+			const ew=new Object;
 			ew.i='father';
 			ew.publish=$c('.ew-publish');
 			
-			$c('.ew-send-btn').addEventListener('click',function(){
-				var myDate = new Date();
+			$c('.ew-send-btn').addEventListener('click',() => {
+				const myDate = new Date();
 				sendcom(ew.i,$c('.ew-author').value,$c('.ew-email').value,$c('.ew-weburl').value,myDate.getTime(),$c('.ew-textarea').value);
 			},false);
 			
-			$c('.ew-publish-back').addEventListener('click',function(){
+			$c('.ew-publish-back').addEventListener('click',() => {
 				ew.i='father';
 				ew.publish.className='ew-publish';
-				var earr=document.querySelectorAll('.ew-li-main');
-				for (var i = 0; i <earr.length; i++) {
+				const earr=document.querySelectorAll('.ew-li-main');
+				for (let i = 0; i <earr.length; i++) {
 					if(earr[i].style.marginBottom){earr[i].style.marginBottom='auto'}
 				}
 				
 			},false);
 			
 			function sendcom(id,name,email,weburl,time,str){
-				var warp= document.createElement('div');
-				var number;
+				const warp= document.createElement('div');
+				let number;
 				if(id=='father'){
 					number=$c('.ew-list').querySelectorAll('.ew-li');
-					warp.className='ew-li ew-id-'+number.length;
+					warp.className=`ew-li ew-id-${number.length}`;
 				}else{
-					number=$c('.ew-id-'+id).querySelectorAll('.ew-li');
-					warp.className='ew-li ew-id-'+id+'-'+number.length;
+					number=$c(`.ew-id-${id}`).querySelectorAll('.ew-li');
+					warp.className=`ew-li ew-id-${id}-${number.length}`;
 				}
 				
-				var xdom=`<div class="ew-li-main">
+				const xdom=`<div class="ew-li-main">
 							<div class="ew-li-logo" style="background-image:url(https://v2ex.assets.uxengine.net/gravatar/${MD5(email)}?s=80&d=retro)"></div>
 							<div class="ew-li-com-w">
 								<div class="ew-li-user"><a href="${weburl}">${name}</a></div>
@@ -215,29 +215,37 @@
 						<div class="ew-li-next"></div>
 						</div>`;
 				warp.innerHTML=xdom;
-				var btn=warp.querySelector('.ew-li-main>.ew-li-com-w>.ew-li-reply');
+				const btn=warp.querySelector('.ew-li-main>.ew-li-com-w>.ew-li-reply');
 				btn.addEventListener('click',function(){
 					ew.i=this.i;
-					var earr=document.querySelectorAll('.ew-li-main');
+					const earr=document.querySelectorAll('.ew-li-main');
 					for (var i = 0; i <earr.length; i++) {
 						if(earr[i].style.marginBottom){earr[i].style.marginBottom='auto'}
 					}
-					var e=warp.querySelector('.ew-li-main');
+					const e=warp.querySelector('.ew-li-main');
 					ew.publish.className='ew-publish ew-publish-fly';
-					ew.publish.style.top=e.offsetHeight+e.offsetTop+'px';
+					ew.publish.style.top=`${e.offsetHeight+e.offsetTop}px`;
 					e.style.marginBottom='250px';
-					
-					
+					let lc='#';
+					const str=(this.i).toString();
+					const arr=str.split('-');
+					for (var i = 0; i < arr.length; i++) {
+							if(i==arr.length-1){
+								const t= parseInt(arr[i])+1;
+								lc=lc+t;
+							}else{
+								lc=`${lc+(parseInt(arr[i])+1)}-`;
+							}
+						}
+					$c('.ew-publish-title-lc').innerHTML=lc;
 				},false);
 				if(id=='father'){
 					btn.i=number.length;
 					$c('.ew-list').appendChild(warp);
 				}else{
-					btn.i=id+'-'+number.length;
-					$c('.ew-id-'+id+'>.ew-li-next').appendChild(warp);
-				}
-				
-				
+					btn.i=`${id}-${number.length}`;
+					$c(`.ew-id-${id}>.ew-li-next`).appendChild(warp);
+				}	
 			}
 		</script>
 	</body>
