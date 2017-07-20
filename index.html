@@ -1,255 +1,314 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<title>评论</title>
-		<script src="md5.js" type="text/javascript" charset="utf-8"></script>
-		<style type="text/css">
-			body{
-				background-color: #EEE;
-			}
-			.ew-comment{
-				padding: 15px 10px;
-				position: relative;
-			}
-		.comment{
-			width: 800px;
-			margin: 0 auto;
-		
-		}
-		.ew-publish{
-			overflow: hidden;
-		}
-		.ew-publish-fly{
-			position: absolute;
-			top: 256px;
-			width: 100%;
-			left: 0;
-		}
-		.ew-publish-title {
-		    font-size: 16px;
-		    padding: 10px 0;
-		    font-weight: 500;
-		    color: #565656;
-		}
-		.ew-publish-title-lc{
-			color: #969292;
-			display: none;
-		}
-		.ew-publish-back{
-			color: #e07e7e;
-			display: none;
-			cursor: pointer;
-			margin-left: 30px;
-		}
-		.ew-publish-fly .ew-publish-back,.ew-publish-fly .ew-publish-title-lc{
-			display: inline-block;
-		}
-		.ew-textarea-warp{
-			/*margin-left: 100px;*/
-			background-color: #fff;
-			border-radius: 12px;
-			padding: 6px;
-			/*background: #FFFFFF bottom right 20px no-repeat url(https://www.haotown.cn/changyan/3.png);*/
-			/*box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);*/
-			border: 1px solid #d0d0d0;
-		}
-		.ew-textarea{
-			width: 100%;
-		    height: 70px;
-		    background: 0 0;
-		    overflow-x: hidden;
-		    overflow-y: auto;
-		    border: 0;
-		    font-size: 14px;
-		    color: #333;
-		    resize: none;
-		    line-height: normal;
-		    text-align: left;
-		    outline:medium;
-		}
-		.ew-info{
-			margin-top: 20px;
-			margin-bottom: 10px;
-			position: relative;
-		}
-		.ew-info>.text-block{
-			height: 25px;
-		    width: 24%;
-		    margin-right: 2%;
-		    border: 1px solid #b5b5b5;
-		    border-radius: 4px;
-		    padding: 0 4px;
-		    outline: none;
-		}
-		.ew-info>.ew-send-btn{
-			position: absolute;
-		    right: 0;
-		    top: -4px;
-		    width: 130px;
-		    background-color: #e88678;
-		    color: #fff;
-		    text-align: center;
-		    line-height: 40px;
-		    font-size: 20px;
-		    border-radius: 10px;
-		    box-shadow:0 0 10px rgba(253, 0, 0, 0.4);
-		    cursor: pointer;
-		}
-		.ew-bar{
-			background-color: #B5B5B5;
-		    color: #FFFFFF;
-		    margin-top: 10px;
-		    margin-bottom: 10px;
-		    font-size: 15px;
-		    line-height: 32px;
-		    padding: 0 17px;
-		}
-		.ew-li{
-			overflow: hidden;
-		}
-		.ew-li-main{
-			overflow: hidden;
-		    border-left: 7px solid #fb9b79;
-		    margin-bottom: 4px;
-		}
-		.ew-li-com{
-			margin-left: 90px;
-		}
-		.ew-li-user,.ew-li-time{
-			display: inline-block;
-			color: #3a3a3a;
-			font-size: 15px;
-			margin-top: 12px;
-		}
-		.ew-li-user>a{
-			color: #3a3a3a;
-			font-size: 15px;
-			text-decoration: none;
-		}
-		.ew-li-time{
-			color: #797878;
-			margin-left: 10px;
-		}
-		.ew-li-logo {
-			margin: 16px 20px 16px 10px;
-			background-image: url(https://0d077ef9e74d8.cdn.sohucs.com/clip_picture_1486299863299);
-		    width: 60px;
-		    height: 60px;
-		    background-size: cover;
-		    border-radius: 50%;
-		    float: left;
-		}
-		.ew-li-reply{
-			float: right;
-			color: #E88678;
-			cursor: pointer;
-		}
-		.ew-li-next{
-			margin-left: 50px;
-		}
-		</style>
-	</head>
-	<body>
-		<div class="comment">
-			<div class="ew-comment">
-				<div class="ew-publish">
-					<div class="ew-publish-title">正在回复 <span class="ew-publish-title-lc">#0</span> <span class="ew-publish-back">返回评论</span></div>
-					<div class="ew-textarea-warp">
-						<textarea node-type="textarea" name="" class="ew-textarea" placeholder="评论.." autocomplete="off" spellcheck="false"></textarea>
-					</div>
-					<div class="ew-info">
-						<input class="text-block ew-author"  name="author" type="text" value="" size="30" placeholder="昵称 *" autocomplete="off">
-						<input class="text-block ew-email"  name="email" type="email" value="" size="30" placeholder="邮箱 *" autocomplete="off">
-						<input class="text-block ew-weburl"  name="url" type="url" value="" size="30" placeholder="网址" autocomplete="off">
-						<div class="ew-send-btn">发送</div>
-					</div>
-				</div>
-				<div class="ew-bar">喵喵</div>
-				<div class="ew-list">
-				</div>
-			</div>
-		</div>
-		<script type="text/javascript">
-			function $c(i){
-				return document.querySelector(i);
-			}
-			const ew=new Object;
-			ew.i='father';
-			ew.publish=$c('.ew-publish');
-			
-			$c('.ew-send-btn').addEventListener('click',() => {
-				const myDate = new Date();
-				sendcom(ew.i,$c('.ew-author').value,$c('.ew-email').value,$c('.ew-weburl').value,myDate.getTime(),$c('.ew-textarea').value);
-			},false);
-			
-			$c('.ew-publish-back').addEventListener('click',() => {
-				ew.i='father';
-				ew.publish.className='ew-publish';
-				const earr=document.querySelectorAll('.ew-li-main');
-				for (let i = 0; i <earr.length; i++) {
-					if(earr[i].style.marginBottom){earr[i].style.marginBottom='auto'}
-				}
-				
-			},false);
-			
-			function sendcom(id,name,email,weburl,time,str){
-				const warp= document.createElement('div');
-				let number;
-				if(id=='father'){
-					number=$c('.ew-list').querySelectorAll('.ew-li');
-					warp.className=`ew-li ew-id-${number.length}`;
-				}else{
-					number=$c(`.ew-id-${id}`).querySelectorAll('.ew-li');
-					warp.className=`ew-li ew-id-${id}-${number.length}`;
-				}
-				
-				const xdom=`<div class="ew-li-main">
-							<div class="ew-li-logo" style="background-image:url(https://v2ex.assets.uxengine.net/gravatar/${MD5(email)}?s=80&d=retro)"></div>
-							<div class="ew-li-com-w">
-								<div class="ew-li-user"><a href="${weburl}">${name}</a></div>
-								<div class="ew-li-time">${time}</div>
-								<div class="ew-li-com">
-									${str}
-								</div>
-								<div class="ew-li-reply">回复</div>
-							</div>
-						</div>
-						<div class="ew-li-next"></div>
-						</div>`;
-				warp.innerHTML=xdom;
-				const btn=warp.querySelector('.ew-li-main>.ew-li-com-w>.ew-li-reply');
-				btn.addEventListener('click',function(){
-					ew.i=this.i;
-					const earr=document.querySelectorAll('.ew-li-main');
-					for (var i = 0; i <earr.length; i++) {
-						if(earr[i].style.marginBottom){earr[i].style.marginBottom='auto'}
-					}
-					const e=warp.querySelector('.ew-li-main');
-					ew.publish.className='ew-publish ew-publish-fly';
-					ew.publish.style.top=`${e.offsetHeight+e.offsetTop}px`;
-					e.style.marginBottom='250px';
-					let lc='#';
-					const str=(this.i).toString();
-					const arr=str.split('-');
-					for (var i = 0; i < arr.length; i++) {
-							if(i==arr.length-1){
-								const t= parseInt(arr[i])+1;
-								lc=lc+t;
-							}else{
-								lc=`${lc+(parseInt(arr[i])+1)}-`;
-							}
-						}
-					$c('.ew-publish-title-lc').innerHTML=lc;
-				},false);
-				if(id=='father'){
-					btn.i=number.length;
-					$c('.ew-list').appendChild(warp);
-				}else{
-					btn.i=`${id}-${number.length}`;
-					$c(`.ew-id-${id}>.ew-li-next`).appendChild(warp);
-				}	
-			}
-		</script>
-	</body>
+    <head>
+        <meta charset="utf-8" />
+        <title>评论</title>
+        <script src="md5.js" type="text/javascript" charset="utf-8"></script>
+        <style type="text/css">
+            body{
+                background-color: #EEE;
+            }
+            .ew-comment{
+                padding: 15px 10px;
+                position: relative;
+            }
+        .comment{
+            width: 800px;
+            margin: 0 auto;
+        
+        }
+        .ew-publish{
+            overflow: hidden;
+        }
+        .ew-publish-fly{
+            position: absolute;
+            top: 256px;
+            width: 100%;
+            left: 0;
+        }
+        .ew-publish-title {
+            font-size: 16px;
+            padding: 10px 0;
+            font-weight: 500;
+            color: #565656;
+        }
+        .ew-publish-title-lc{
+            color: #969292;
+            display: none;
+        }
+        .ew-publish-back{
+            color: #e07e7e;
+            display: none;
+            cursor: pointer;
+            margin-left: 30px;
+        }
+        .ew-publish-fly .ew-publish-back,.ew-publish-fly .ew-publish-title-lc{
+            display: inline-block;
+        }
+        .ew-textarea-warp{
+            /*margin-left: 100px;*/
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 6px;
+            /*background: #FFFFFF bottom right 20px no-repeat url(https://www.haotown.cn/changyan/3.png);*/
+            /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);*/
+            border: 1px solid #d0d0d0;
+        }
+        .ew-textarea{
+            width: 100%;
+            height: 70px;
+            background: 0 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            border: 0;
+            font-size: 14px;
+            color: #333;
+            resize: none;
+            line-height: normal;
+            text-align: left;
+            outline:medium;
+        }
+        .ew-info{
+            margin-top: 20px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .ew-info>.text-block{
+            height: 25px;
+            width: 24%;
+            margin-right: 2%;
+            border: 1px solid #b5b5b5;
+            border-radius: 4px;
+            padding: 0 4px;
+            outline: none;
+        }
+        .ew-info>.ew-send-btn{
+            position: absolute;
+            right: 0;
+            top: -4px;
+            width: 130px;
+            background-color: #e88678;
+            color: #fff;
+            text-align: center;
+            line-height: 40px;
+            font-size: 20px;
+            border-radius: 10px;
+            box-shadow:0 0 10px rgba(253, 0, 0, 0.4);
+            cursor: pointer;
+        }
+        .ew-bar{
+            background-color: #B5B5B5;
+            color: #FFFFFF;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 15px;
+            line-height: 32px;
+            padding: 0 17px;
+        }
+        .ew-li{
+            overflow: hidden;
+        }
+        .ew-li-main{
+            overflow: hidden;
+            border-left: 7px solid #fb9b79;
+            margin-bottom: 4px;
+        }
+        .ew-li-com{
+            margin-left: 90px;
+        }
+        .ew-li-user,.ew-li-time{
+            display: inline-block;
+            color: #3a3a3a;
+            font-size: 15px;
+            margin-top: 12px;
+        }
+        .ew-li-user>a{
+            color: #3a3a3a;
+            font-size: 15px;
+            text-decoration: none;
+        }
+        .ew-li-time{
+            color: #797878;
+            margin-left: 10px;
+        }
+        .ew-li-logo {
+            margin: 16px 20px 16px 10px;
+            background-image: url(https://0d077ef9e74d8.cdn.sohucs.com/clip_picture_1486299863299);
+            width: 60px;
+            height: 60px;
+            background-size: cover;
+            border-radius: 50%;
+            float: left;
+        }
+        .ew-li-reply{
+            float: right;
+            color: #E88678;
+            cursor: pointer;
+        }
+        .ew-li-next{
+            margin-left: 50px;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="comment">
+            <div class="ew-comment">
+                <div class="ew-publish">
+                    <div class="ew-publish-title">正在回复 <span class="ew-publish-title-lc">#0</span> <span class="ew-publish-back">返回评论</span></div>
+                    <div class="ew-textarea-warp">
+                        <textarea node-type="textarea" name="" class="ew-textarea" placeholder="评论.." autocomplete="off" spellcheck="false"></textarea>
+                    </div>
+                    <div class="ew-info">
+                        <input class="text-block ew-author"  name="author" type="text" value="" size="30" placeholder="昵称 *" autocomplete="off">
+                        <input class="text-block ew-email"  name="email" type="email" value="" size="30" placeholder="邮箱 *" autocomplete="off">
+                        <input class="text-block ew-weburl"  name="url" type="url" value="" size="30" placeholder="网址" autocomplete="off">
+                        <div class="ew-send-btn">发送</div>
+                    </div>
+                </div>
+                <div class="ew-bar">喵喵</div>
+                <div class="ew-list">
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            function $c(i){
+                return document.querySelector(i);
+            }
+            const ew=new Object;
+            ew.i='father';
+            ew.publish=$c('.ew-publish');
+            ew.json={
+                ew_wid:1200,
+                ew_cid:1,
+                data:[{
+                    id:'father',
+                    user:'哈啊哈',
+                    email:'ureygt@gmail.com',
+                    time:1452027724000,
+                    weburl:'https://haotown.cn',
+                    text:'天天天天天天'
+                },{
+                    id:'father',
+                    user:'哈啊哈',
+                    email:'ureygt@gmail.com',
+                    time:1500514692132,
+                    weburl:'https://haotown.cn',
+                    text:'天天天天天天'                               
+                },{
+                    id:'father',
+                    user:'哈啊哈',
+                    email:'ureygt@gmail.com',
+                    time:1500514692132,
+                    weburl:'https://haotown.cn',
+                    text:'天天天天天天'                       
+                },{
+                    id:'0',
+                    user:'哈x啊哈x',
+                    email:'ureygt@xgmail.com',
+                    time:1500514692132,
+                    weburl:'https://haotown.cn',
+                    text:'sadsad天'                      
+                }]
+                
+            };
+            
+            ew.update=()=>{
+                $c('.ew-list').innerHTML="";
+                for (let i = 0; i < ew.json.data.length; i++) {
+                    let t= ew.json.data[i];
+                    sendcom(t.id,t.user,t.email,t.weburl,t.time,t.text)
+                }
+            }
+            ew.update();
+            $c('.ew-send-btn').addEventListener('click',() => {
+                const myDate = new Date();
+                sendcom(ew.i,$c('.ew-author').value,$c('.ew-email').value,$c('.ew-weburl').value,myDate.getTime(),$c('.ew-textarea').value);
+            },false);
+            
+            $c('.ew-publish-back').addEventListener('click',() => {
+                ew.i='father';
+                ew.publish.className='ew-publish';
+                const earr=document.querySelectorAll('.ew-li-main');
+                for (let i = 0; i <earr.length; i++) {
+                    if(earr[i].style.marginBottom){earr[i].style.marginBottom='auto'}
+                }
+                
+            },false);
+            
+            function sendcom(id,name,email,weburl,time,str){
+                const warp= document.createElement('div');
+                let number;
+                if(id=='father'){
+                    number=$c('.ew-list').querySelectorAll('.ew-li');
+                    warp.className=`ew-li ew-id-${number.length}`;
+                }else if($c(`.ew-id-${id}`)){
+                    number=$c(`.ew-id-${id}`).querySelectorAll('.ew-li');
+                    warp.className=`ew-li ew-id-${id}-${number.length}`;
+                }else{
+                    console.log('数据可能存在错误')
+                }
+                //时间计算
+                let timestr;
+                const nowtime=new Date().getTime();
+                let timed=nowtime-time;
+                if(timed<60000){
+                    timestr='刚刚';
+                }else if(timed<60000*60){
+                    timestr=new Date(timed).getMinutes()+'分钟前';
+                }else if(timed<60000*60*24){
+                    timestr=new Date(timed).getHours()+'小时前';
+                }else{
+                    let t=new Date(parseInt(time));
+                    timestr=t.getFullYear()+'年'+t.getMonth()+'月'+t.getDay()+'日'
+                }
+                const xdom=`<div class="ew-li-main">
+                            <div class="ew-li-logo" style="background-image:url(https://v2ex.assets.uxengine.net/gravatar/${MD5(email)}?s=80&d=retro)"></div>
+                            <div class="ew-li-com-w">
+                                <div class="ew-li-user"><a href="${weburl}">${name}</a></div>
+                                <div class="ew-li-time">${timestr}</div>
+                                <div class="ew-li-com">
+                                    ${str}
+                                </div>
+                                <div class="ew-li-reply">回复</div>
+                            </div>
+                        </div>
+                        <div class="ew-li-next"></div>
+                        </div>`;
+                warp.innerHTML=xdom;
+                const btn=warp.querySelector('.ew-li-main>.ew-li-com-w>.ew-li-reply');
+                btn.addEventListener('click',function(){
+                    ew.i=this.i;
+                    const earr=document.querySelectorAll('.ew-li-main');
+                    for (var i = 0; i <earr.length; i++) {
+                        if(earr[i].style.marginBottom){earr[i].style.marginBottom='auto'}
+                    }
+                    const e=warp.querySelector('.ew-li-main');
+                    ew.publish.className='ew-publish ew-publish-fly';
+                    ew.publish.style.top=`${e.offsetHeight+e.offsetTop}px`;
+                    e.style.marginBottom='250px';
+                    let lc='#';
+                    const str=(this.i).toString();
+                    const arr=str.split('-');
+                    for (var i = 0; i < arr.length; i++) {
+                            if(i==arr.length-1){
+                                const t= parseInt(arr[i])+1;
+                                lc=lc+t;
+                            }else{
+                                lc=`${lc+(parseInt(arr[i])+1)}-`;
+                            }
+                        }
+                    $c('.ew-publish-title-lc').innerHTML=lc;
+                },false);
+                if(id=='father'){
+                    btn.i=number.length;
+                    $c('.ew-list').appendChild(warp);
+                }else if($c(`.ew-id-${id}>.ew-li-next`)){
+                    btn.i=`${id}-${number.length}`;
+                    $c(`.ew-id-${id}>.ew-li-next`).appendChild(warp);
+                }else{
+                    console.log('数据可能存在错误')
+                }
+            }
+        </script>
+    </body>
 </html>
