@@ -25,7 +25,7 @@ mysql      = require('mysql');
       }
     });
   }
-console.log('hcon服务开启');
+console.log('hco服务开启');
 http.createServer(function(req, res){
     res.writeHead(200, {'Content-Type': 'application/json; charset=utf8','Access-Control-Allow-Origin':'*'});
     var getobj=querystring.parse(url.parse(req.url).query);
@@ -33,7 +33,7 @@ http.createServer(function(req, res){
       if (getobj.id) {
           handleConnect();
 		  console.log('查询id: '+getobj.id+'的评论');
-		   db.query('CREATE TABLE IF NOT EXISTS `'+getobj.id+'`(`id` int(8) NOT NULL AUTO_INCREMENT,`user` char(30) NOT NULL, `email` char(20) NOT NULL,`weburl` char(20) DEFAULT NULL,`cid` char(20) NOT NULL,PRIMARY KEY (`id`))');
+		   db.query('CREATE TABLE IF NOT EXISTS `'+getobj.id+'`(`id` int(8) NOT NULL AUTO_INCREMENT,`user` char(30) NOT NULL, `email` char(20) NOT NULL,`weburl` char(20) DEFAULT NULL,`cid` char(20) NOT NULL,`time` char(30) NOT NULL,`text` text NOT NULL,PRIMARY KEY (`id`))');
            db.query('SELECT * FROM `'+parseInt(getobj.id)+'`', function(err, rows, fields) {
            if (err){
               res.end('{"success":0,"data":[{"id":0,"time":10,"text":"链接弹幕失败￣□￣｜｜","color":"#fff","place":1}]}');
@@ -42,16 +42,17 @@ http.createServer(function(req, res){
             i++
             var d= rows;
             res.end('{"success":1,"data":'+JSON.stringify(d)+'}');
+            db.end();
+	  				console.log('关闭连接');
           });
       }else{
-          res.end('{"success":0,"data":[{"id":0,"time":10,"text":"链接弹幕失败￣□￣｜｜","color":"#fff","place":1}]}');
+          res.end('{"success":0,"data":[{"text":"参数错误￣□￣｜｜"}]}');
       }
-      db.end();
-	  console.log('关闭连接');
+     
     }
     catch(err){
       console.log('发生错误了'+eer)
-      res.end('{"success":0,"data":[{"id":0,"time":10,"text":"链接弹幕失败￣□￣｜｜","color":"#fff","place":1}]}');
+      res.end('{"success":0,"data":[{"text":"请求出现错误￣□￣｜｜"}]}');
     }
 }).listen(5221);
 
@@ -65,18 +66,18 @@ http.createServer(function (req, res) {
       var p = querystring.parse(body);
       // 设置响应头部信息及编码
       res.writeHead(200, {'Content-Type': 'application/json; charset=utf8','Access-Control-Allow-Origin':'*'});
-      var now=new Date();
-      var time=1900+now.getYear()+"-"+(now.getMonth()+1)+"-"+now.getDate()+" "+now.getHours()+":"+now.getMinutes()+":"+now.getSeconds();
-      if(p.id&&p.time&&p.text&&p.color&&p.place) { // 输出提交的数据
-         handleConnect();
-          db.query("INSERT INTO `danmu`.`"+parseInt(p.id)+"` (`id`, `time`, `text`, `color`, `place`) VALUES (NULL, "+db.escape(p.time)+", "+db.escape(p.text)+", "+db.escape(p.color)+", "+db.escape(p.place)+")", function(err, rows, fields) {
-           res.end(`{"success":1,"container":"发送成功","time":"${time}"}`);
-		    console.log(`发送弹幕完成表:${p.id}内容:${p.text}`)
+      var xtime=new Date().getTime();
+      console.log(xtime);
+      if(p.id&&p.cid&&p.user&&p.email&&p.text) { // 输出提交的数据
+          handleConnect();
+          console.log(xtime);
+          db.query("INSERT INTO `hco`.`"+parseInt(p.id)+"` (`id`, `user`, `email`, `weburl`, `cid`,`time`, `text`) VALUES (NULL, "+db.escape(p.user)+", "+db.escape(p.email)+", "+db.escape(p.weburl)+","+db.escape(p.cid)+","+xtime+","+db.escape(p.text) +")", function(err, rows, fields) {
+          res.end(`{"success":1,"container":"发送成功","time":"${xtime}"}`);
+		      console.log(`发送成功:${p.id}内容:${p.text}`)
             db.end();
-            
           })
       } else {  
-          res.end(`{"success":0,"container":"请求参数错误","time":"${time}"}`);
+          res.end('{"success":0,"data":[{"text":"参数错误￣□￣｜｜"}]}');
       }
     });
   

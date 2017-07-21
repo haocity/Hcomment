@@ -216,41 +216,19 @@
 			const ew=new Object;
 			ew.i='father';
 			ew.publish=$c('.ew-publish');
-			ew.json={
-				ew_wid:1200,
-				ew_cid:1,
-				data:[{
-					id:'father',
-					user:'哈啊哈',
-					email:'ureygt@gmail.com',
-					time:1452027724000,
-					weburl:'https://haotown.cn',
-					text:'天天天天天天'
-				},{
-					id:'father',
-					user:'哈啊哈',
-					email:'ureygt@gmail.com',
-					time:1500514692132,
-					weburl:'https://haotown.cn',
-					text:'天天天天天天'								
-				},{
-					id:'father',
-					user:'哈啊哈',
-					email:'ureygt@gmail.com',
-					time:1500514692132,
-					weburl:'https://haotown.cn',
-					text:'天天天天天天'						
-				},{
-					id:'0',
-					user:'哈x啊哈x',
-					email:'ureygt@xgmail.com',
-					time:1500514692132,
-					weburl:'https://haotown.cn',
-					text:'sadsad天'						
-				}]
-				
-			};
-			
+			ew.getdata=()=>{
+				let xmlhttp=new XMLHttpRequest();
+				xmlhttp.onreadystatechange=function()
+				{
+					if (xmlhttp.readyState==4 && xmlhttp.status==200)
+					{
+						ew.json=JSON.parse(xmlhttp.responseText);
+						ew.update();
+					}
+				}
+				xmlhttp.open("GET","https://t5.haotown.cn/hcon/get/?id=1",true);
+				xmlhttp.send();
+			}
 			//加载本地储存的信息
 			if (localStorage.getItem('ew')) {
 		       console.log('加载设置成功');
@@ -264,10 +242,9 @@
 				$c('.ew-list').innerHTML="";
 				for (let i = 0; i < ew.json.data.length; i++) {
 					let t= ew.json.data[i];
-					sendcom(t.id,t.user,t.email,t.weburl,t.time,t.text)
+					sendcom(t.cid,t.user,t.email,t.weburl,t.time,t.text)
 				}
 			}
-			ew.update();
 			$c('.ew-send-btn').addEventListener('click',() => {
 				//验证url,e-mail
 				var mailreg=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
@@ -279,13 +256,51 @@
 					ew.alert('邮箱错误')
 				}else{
 					const myDate = new Date();
-					let t= $c('.ew-textarea').value.replace(/\n/g, "<br>");
-					sendcom(ew.i,$c('.ew-author').value,$c('.ew-email').value,$c('.ew-weburl').value,myDate.getTime(),t);
-					ew.alert('评论成功');
-					var c=`{"user":"${$c('.ew-author').value}","email":"${$c('.ew-email').value}","weburl":"${$c('.ew-weburl').value}"}`
-					localStorage.setItem('ew', c);
+					ew.t= $c('.ew-textarea').value.replace(/\n/g, "<br>");
+					//发送数据
+					var postData = {
+			            id:1,
+			            user:$c('.ew-author').value,
+			            email:$c('.ew-email').value,
+			            url:$c('.ew-weburl').value,
+			            text:ew.t,
+			            cid:ew.i
+		        	};
+			        postData = function(obj) {
+			            // 转成post需要的字符串.
+			            var str = "";
+			            for (var prop in obj) {
+			                str += prop + "=" + obj[prop] + "&";
+			            }
+			            return str;
+			        }(postData);
+			        let xhr = new XMLHttpRequest();
+			        xhr.open("POST",'https://t5.haotown.cn/hcon/send/', true);
+			        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			        xhr.onreadystatechange = function() {
+			            var XMLHttpReq = xhr;
+			            if (XMLHttpReq.readyState == 4) {
+			                if (XMLHttpReq.status == 200) {
+			                   let t= JSON.parse(XMLHttpReq.responseText);
+			                   if(t.success){
+			                   		sendcom(ew.i,$c('.ew-author').value,$c('.ew-email').value,$c('.ew-weburl').value,myDate.getTime(),ew.t);
+									ew.alert('评论成功');
+									$c('.ew-textarea').value='';
+									var c=`{"user":"${$c('.ew-author').value}","email":"${$c('.ew-email').value}","weburl":"${$c('.ew-weburl').value}"}`
+									localStorage.setItem('ew', c);
+			                   }else{
+			                   		ew.alert('发送失败');
+			                   }
+			                }
+			            }
+			        };
+			        xhr.send(postData);
+		        //发送end	
 				}	
 			},false);
+			
+			
+			
 			
 			$c('.ew-publish-back').addEventListener('click',() => {
 				ew.i='father';
@@ -379,6 +394,7 @@
 					},1900);
 				}
 			}
+			ew.getdata();
 		</script>
 	</body>
 </html>
