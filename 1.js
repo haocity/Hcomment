@@ -1,13 +1,15 @@
+"use strict";
 var http = require('http');
 var url = require('url');
 var util = require('util');
 var querystring = require('querystring');
-mysql      = require('mysql');
+var mysql      = require('mysql');
+var db;
   function handleConnect() {
-    db = mysql.createConnection({
+      db = mysql.createConnection({
       host     : 'localhost',
       user     : 'root',
-      password : 'root',
+      password : 'password',
       database : 'hco'
     }); 
     db.connect(function(err) {        
@@ -34,10 +36,10 @@ http.createServer(function(req, res){
           handleConnect();
 		  console.log('查询id: '+getobj.id+'的评论');
 		   db.query('CREATE TABLE IF NOT EXISTS `'+getobj.id+'`(`id` int(8) NOT NULL AUTO_INCREMENT,`user` char(30) NOT NULL, `email` char(20) NOT NULL,`weburl` char(20) DEFAULT NULL,`cid` char(20) NOT NULL,`time` char(30) NOT NULL,`text` text NOT NULL,PRIMARY KEY (`id`))');
-           db.query('SELECT * FROM `'+parseInt(getobj.id)+'`', function(err, rows, fields) {
+           db.query('SELECT * FROM `'+parseInt(getobj.id)+'`ORDER BY `id`', function(err, rows, fields) {
            if (err){
               res.end('{"success":0,"data":[{"id":0,"time":10,"text":"链接弹幕失败￣□￣｜｜","color":"#fff","place":1}]}');
-						}
+			}
             var i=0;
             i++
             var d= rows;
@@ -50,11 +52,11 @@ http.createServer(function(req, res){
       }
      
     }
-    catch(err){
-      console.log('发生错误了'+eer)
+    catch(error){
+      console.log('发生错误了'+error)
       res.end('{"success":0,"data":[{"text":"请求出现错误￣□￣｜｜"}]}');
     }
-}).listen(5221);
+}).listen(5225);
 
 http.createServer(function (req, res) {
     var body = "";
@@ -70,7 +72,15 @@ http.createServer(function (req, res) {
       console.log(xtime);
       if(p.id&&p.cid&&p.user&&p.email&&p.text) { // 输出提交的数据
           handleConnect();
-          console.log(xtime);
+          var regarr=[/\n/g,/<script/g,/<\/script/g,/<style/g,/<\/style/g,/<\/div/g,/<div/g,/<\/pre/g];
+          for (let i = 0; i <regarr.length; i++) {
+          		p.user=p.user.replace(regarr[i]);
+          		p.email=p.email.replace(regarr[i]);
+				if(p.weburl){
+					p.weburl=p.weburl.replace(regarr[i]);
+				}
+          		p.text=p.text.replace(regarr[i]);
+          }
           db.query("INSERT INTO `hco`.`"+parseInt(p.id)+"` (`id`, `user`, `email`, `weburl`, `cid`,`time`, `text`) VALUES (NULL, "+db.escape(p.user)+", "+db.escape(p.email)+", "+db.escape(p.weburl)+","+db.escape(p.cid)+","+xtime+","+db.escape(p.text) +")", function(err, rows, fields) {
           res.end(`{"success":1,"container":"发送成功","time":"${xtime}"}`);
 		      console.log(`发送成功:${p.id}内容:${p.text}`)
@@ -81,4 +91,4 @@ http.createServer(function (req, res) {
       }
     });
   
-}).listen(5220);
+}).listen(5226);
