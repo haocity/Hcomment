@@ -169,19 +169,15 @@
 		  from {
 		    transform: scale3d(1, 1, 1);
 		  }
-		
 		  10%, 20% {
 		    transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
 		  }
-		
 		  30%, 50%, 70%, 90% {
 		    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
 		  }
-		
 		  40%, 60%, 80% {
 		    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
 		  }
-		
 		  to {
 		    transform: scale3d(1, 1, 1);
 		  }
@@ -208,98 +204,207 @@
 				</div>
 			</div>
 		</div>
-	
 		<script type="text/javascript">
-"use strict";
-
-function $c(e) {
-    return document.querySelector(e);
-}
-
-function sendcom(e, t, a, l, i, n) {
-    var r = document.createElement("div"), s = void 0;
-    "father" == e ? (s = $c(".ew-list").querySelectorAll(".ew-li"), r.className = "ew-li ew-id-" + s.length) : $c(".ew-id-" + e) ? (s = $c(".ew-id-" + e).querySelectorAll(".ew-li"), 
-    r.className = "ew-li ew-id-" + e + "-" + s.length) : console.log("数据可能存在错误");
-    var c = void 0, o = new Date().getTime(), w = o - i;
-    if (w < 6e4) c = "刚刚"; else if (w < 36e5) c = new Date(w).getMinutes() + "分钟前"; else if (w < 864e5) c = new Date(w).getHours() + "小时前"; else {
-        var u = new Date(parseInt(i));
-        c = u.getFullYear() + "年" + u.getMonth() + "月" + u.getDay() + "日";
-    }
-    var d = '<div class="ew-li-main"><div class="ew-li-logo" style="background-image:url(https://v2ex.assets.uxengine.net/gravatar/' + MD5(a) + '?s=80&d=retro)"></div><div class="ew-li-com-w"><div class="ew-li-user"><a href="' + l + '">' + t + '</a></div><div class="ew-li-time">' + c + '</div><pre class="ew-li-com">' + n + '</pre></div></div><div class="ew-li-next"></div></div>';
-    r.innerHTML = d;
-    var v = document.createElement("div");
-    v.className = "ew-li-reply", v.innerHTML = "回复", v.addEventListener("click", function() {
-        ew.i = this.i;
-        for (var e = document.querySelectorAll(".ew-li-main"), t = 0; t < e.length; t++) e[t].style.marginBottom && (e[t].style.marginBottom = "auto");
-        var a = r.querySelector(".ew-li-main");
-        ew.publish.className = "ew-publish ew-publish-fly", ew.publish.style.top = a.offsetHeight + a.offsetTop + "px", 
-        a.style.marginBottom = "250px";
-        for (var l = "#", i = this.i.toString(), n = i.split("-"), t = 0; t < n.length; t++) if (t == n.length - 1) {
-            var s = parseInt(n[t]) + 1;
-            l += s;
-        } else l = l + (parseInt(n[t]) + 1) + "-";
-        $c(".ew-publish-title-lc").innerHTML = l;
-    }, !1), r.querySelector(".ew-li-main>.ew-li-com-w").appendChild(v), "father" == e ? (v.i = s.length, 
-    $c(".ew-list").appendChild(r)) : $c(".ew-id-" + e + ">.ew-li-next") ? (v.i = e + "-" + s.length, 
-    $c(".ew-id-" + e + ">.ew-li-next").appendChild(r)) : console.log("数据可能存在错误" + e);
-}
-
-var ew = new Object();
-
-if (ew.i = "father", ew.id = 2, ew.publish = $c(".ew-publish"), ew.getdata = function() {
-    var e = new XMLHttpRequest();
-    e.onreadystatechange = function() {
-        4 == e.readyState && 200 == e.status && (ew.json = JSON.parse(e.responseText), ew.update());
-    }, e.open("GET", "https://t5.haotown.cn/hcon/get/?id=" + ew.id, !0), e.send();
-}, localStorage.getItem("ew")) {
-    console.log("加载设置成功");
-    var t = JSON.parse(localStorage.getItem("ew"));
-    $c(".ew-email").value = t.email, $c(".ew-author").value = t.user, $c(".ew-weburl").value = t.weburl;
-}
-
-ew.update = function() {
-    $c(".ew-list").innerHTML = "";
-    for (var e = 0; e < ew.json.data.length; e++) {
-        var t = ew.json.data[e];
-        sendcom(t.cid, t.user, t.email, t.weburl, t.time, t.text);
-    }
-}, $c(".ew-send-btn").addEventListener("click", function() {
-    var e = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-    if ($c(".ew-textarea").value.length <= 6) ew.alert("内容太短了"); else if ($c(".ew-author").value) if (e.test($c(".ew-email").value)) {
-        for (var t = (new Date(), [ /\n/g, /<script/g, /<\/script/g, /<style/g, /<\/style/g, /<\/div/g, /<div/g, /<\/pre/g, /<[a-z]+\s+on[a-z]+\s+?=/g ]), a = 0; a < t.length; a++) ew.t = $c(".ew-textarea").value.replace(t[a], "<br>");
-        var l = {
-            id: ew.id,
-            user: $c(".ew-author").value,
-            email: $c(".ew-email").value,
-            weburl: $c(".ew-weburl").value,
-            text: ew.t,
-            cid: ew.i
-        };
-        l = function(e) {
-            var t = "";
-            for (var a in e) t += a + "=" + e[a] + "&";
-            return t;
-        }(l);
-        var i = new XMLHttpRequest();
-        i.open("POST", "https://t5.haotown.cn/hcon/send/", !0), i.setRequestHeader("Content-type", "application/x-www-form-urlencoded"), 
-        i.onreadystatechange = function() {
-            var e = i;
-            if (4 == e.readyState && 200 == e.status) if (JSON.parse(e.responseText).success) {
-                ew.getdata(), ew.alert("评论成功"), $c(".ew-textarea").value = "";
-                var t = '{"user":"' + $c(".ew-author").value + '","email":"' + $c(".ew-email").value + '","weburl":"' + $c(".ew-weburl").value + '"}';
-                localStorage.setItem("ew", t);
-            } else ew.alert("发送失败");
-        }, i.send(l);
-    } else ew.alert("邮箱错误"); else ew.alert("请输入用户名");
-}, !1), $c(".ew-publish-back").addEventListener("click", function() {
-    ew.i = "father", ew.publish.className = "ew-publish";
-    for (var e = document.querySelectorAll(".ew-li-main"), t = 0; t < e.length; t++) e[t].style.marginBottom && (e[t].style.marginBottom = "auto");
-}, !1), ew.alert = function(e) {
-    var t = document.createElement("div");
-    t.className = "ew-alert", t.innerText = e, document.body.appendChild(t), setTimeout(function() {
-        t.style.display = "none", t.remove();
-    }, 1900);
-}, ew.getdata();
+			
+			
+			function $c(i){
+				return document.querySelector(i);
+			}
+			const ew=new Object;
+			ew.i='father';
+			ew.id=MD5(document.location.origin+document.location.pathname);
+			ew.api='https://t5.haotown.cn/hcon';
+			ew.publish=$c('.ew-publish');
+			ew.getdata=(k)=>{
+				let xmlhttp=new XMLHttpRequest();
+				xmlhttp.onreadystatechange=function()
+				{
+					if (xmlhttp.readyState==4 && xmlhttp.status==200)
+					{
+						ew.json=JSON.parse(xmlhttp.responseText);
+						ew.update();
+						if(k){
+							$c('.ew-id-'+k+'>.ew-li-main>.ew-li-com-w>.ew-li-reply').click();
+						}
+					}
+				}
+				xmlhttp.open("GET",ew.api+"/get/?id="+ew.id,true);
+				xmlhttp.send();
+			}
+			//加载本地储存的信息
+			if (localStorage.getItem('ew')) {
+		       console.log('加载设置成功');
+		       let t=JSON.parse(localStorage.getItem('ew'));
+		       $c('.ew-email').value=t.email;
+		       $c('.ew-author').value=t.user;
+		       $c('.ew-weburl').value=t.weburl;
+		    }
+			
+			ew.update=()=>{
+				$c('.ew-list').innerHTML="";
+				for (let i = 0; i < ew.json.data.length; i++) {
+					let t= ew.json.data[i];
+					sendcom(t.cid,t.user,t.email,t.weburl,t.time,t.text)
+				}
+			}
+			$c('.ew-textarea').addEventListener('keydown',function(event){
+				if(event.keyCode == 13 && event.ctrlKey){
+					$c('.ew-send-btn').click();
+				}
+			},false);
+			$c('.ew-send-btn').addEventListener('click',() => {
+				//验证url,e-mail
+				var mailreg=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+				if($c('.ew-textarea').value.length<=6){
+					ew.alert('内容太短了')
+				}else if(!$c('.ew-author').value){
+					ew.alert('请输入用户名')
+				}else if(!mailreg.test($c('.ew-email').value)){
+					ew.alert('邮箱错误')
+				}else{
+					const myDate = new Date();
+					var regarr=[/\n/g,/<script/g,/<\/script/g,/<style/g,/<\/style/g,/<\/div/g,/<div/g,/<\/pre/g,/<[a-z]+\s+on[a-z]+\s+?=/g];
+					for (var i = 0; i < regarr.length; i++) {
+						ew.t= $c('.ew-textarea').value.replace(regarr[i], "<br>");
+					}
+					//发送数据
+					var postData = {
+			            id:ew.id,
+			            user:$c('.ew-author').value,
+			            email:$c('.ew-email').value,
+			            weburl:$c('.ew-weburl').value,
+			            text:ew.t,
+			            cid:ew.i
+		        	};
+			        postData = function(obj) {
+			            // 转成post需要的字符串.
+			            var str = "";
+			            for (var prop in obj) {
+			                str += prop + "=" + obj[prop] + "&";
+			            }
+			            return str;
+			        }(postData);
+			   		let xhr = new XMLHttpRequest();
+			        xhr.open("POST",ew.api+'/send/', true);
+			        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			        xhr.onreadystatechange = function() {
+			            var XMLHttpReq = xhr;
+			            if (XMLHttpReq.readyState == 4) {
+			                if (XMLHttpReq.status == 200) {
+			                   let t= JSON.parse(XMLHttpReq.responseText);
+			                   if(t.success){
+			                   		ew.getdata(ew.i);
+									ew.alert('评论成功');
+									$c('.ew-textarea').value='';
+									var c=`{"user":"${$c('.ew-author').value}","email":"${$c('.ew-email').value}","weburl":"${$c('.ew-weburl').value}"}`
+									localStorage.setItem('ew', c);
+			                   }else{
+			                   		ew.alert('发送失败');
+			                   }
+			                }
+			            }
+			        };
+			        xhr.send(postData);
+		        //发送end	
+				}	
+			},false);
+			
+			$c('.ew-publish-back').addEventListener('click',() => {
+				ew.i='father';
+				ew.publish.className='ew-publish';
+				const earr=document.querySelectorAll('.ew-li-main');
+				for (let i = 0; i <earr.length; i++) {
+					if(earr[i].style.marginBottom){earr[i].style.marginBottom='auto'}
+				}
+			},false);
+			
+			function sendcom(id,name,email,weburl,time,str){
+				const warp= document.createElement('div');
+				let number;
+				if(id=='father'){
+					number=$c('.ew-list').querySelectorAll('.ew-li');
+					warp.className=`ew-li ew-id-${number.length}`;
+				}else if($c(`.ew-id-${id}`)){
+					number=$c(`.ew-id-${id}`).querySelectorAll('.ew-li');
+					warp.className=`ew-li ew-id-${id}-${number.length}`;
+				}else{
+					console.log('数据可能存在错误')
+				}
+				//时间计算
+				let timestr;
+				const nowtime=new Date().getTime();
+				let timed=nowtime-time;
+				if(timed<60000){
+					timestr='刚刚';
+				}else if(timed<60000*60){
+					timestr=new Date(timed).getMinutes()+'分钟前';
+				}else if(timed<60000*60*24){
+					timestr=new Date(timed).getHours()+'小时前';
+				}else{
+					let t=new Date(parseInt(time));
+					timestr=t.getFullYear()+'年'+t.getMonth()+'月'+t.getDay()+'日'
+				}
+				const xdom=`<div class="ew-li-main">
+							<div class="ew-li-logo" style="background-image:url(https://v2ex.assets.uxengine.net/gravatar/${MD5(email)}?s=80&d=retro)"></div>
+							<div class="ew-li-com-w">
+								<div class="ew-li-user"><a href="${weburl}">${name}</a></div>
+								<div class="ew-li-time">${timestr}</div>
+								<pre class="ew-li-com">${str}</pre>
+							</div>
+						</div>
+						<div class="ew-li-next"></div>
+						</div>`;
+				warp.innerHTML=xdom;
+				
+				let btn=document.createElement('div');
+				btn.className='ew-li-reply';
+				btn.innerHTML='回复';
+				btn.addEventListener('click',function(){
+					ew.i=this.i;
+					const earr=document.querySelectorAll('.ew-li-main');
+					for (var i = 0; i <earr.length; i++) {
+						if(earr[i].style.marginBottom){earr[i].style.marginBottom='auto'}
+					}
+					const e=warp.querySelector('.ew-li-main');
+					ew.publish.className='ew-publish ew-publish-fly';
+					ew.publish.style.top=`${e.offsetHeight+e.offsetTop}px`;
+					e.style.marginBottom='250px';
+					let lc='#';
+					const str=(this.i).toString();
+					const arr=str.split('-');
+					for (var i = 0; i < arr.length; i++) {
+							if(i==arr.length-1){
+								const t= parseInt(arr[i])+1;
+								lc=lc+t;
+							}else{
+								lc=`${lc+(parseInt(arr[i])+1)}-`;
+							}
+						}
+					$c('.ew-publish-title-lc').innerHTML=lc;
+				},false);
+				warp.querySelector('.ew-li-main>.ew-li-com-w').appendChild(btn);
+				if(id=='father'){
+					btn.i=number.length;
+					$c('.ew-list').appendChild(warp);
+				}else if($c(`.ew-id-${id}>.ew-li-next`)){
+					btn.i=`${id}-${number.length}`;
+					$c(`.ew-id-${id}>.ew-li-next`).appendChild(warp);
+				}else{
+					console.log('数据可能存在错误'+id)
+				}
+			}
+			//提示框
+			ew.alert=(s)=>{
+				var e=document.createElement('div');
+				e.className='ew-alert';
+				e.innerText=s;
+				document.body.appendChild(e);
+				setTimeout(function(){
+					e.style.display='none';
+					e.remove();
+				},1900);
+			}
+			ew.getdata();
 		</script>
 	</body>
 </html>
