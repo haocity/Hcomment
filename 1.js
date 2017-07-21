@@ -4,6 +4,7 @@ var url = require('url');
 var util = require('util');
 var querystring = require('querystring');
 var mysql      = require('mysql');
+var xss = require('xss');
 var db;
   function handleConnect() {
       db = mysql.createConnection({
@@ -72,15 +73,21 @@ http.createServer(function (req, res) {
       console.log(xtime);
       if(p.id&&p.cid&&p.user&&p.email&&p.text) { // 输出提交的数据
           handleConnect();
-          var regarr=[/\n/g,/<script/g,/<\/script/g,/<style/g,/<\/style/g,/<\/div/g,/<div/g,/<\/pre/g];
-          for (let i = 0; i <regarr.length; i++) {
-          		p.user=p.user.replace(regarr[i]);
-          		p.email=p.email.replace(regarr[i]);
-				if(p.weburl){
-					p.weburl=p.weburl.replace(regarr[i]);
-				}
-          		p.text=p.text.replace(regarr[i]);
-          }
+          //var regarr=[/\n/g,/<script/g,/<\/script/g,/<style/g,/<\/style/g,/<\/div/g,/<div/g,/<\/pre/g,/<[a-z]+\s+on[a-z]+\s+?=/g];
+          //for (let i = 0; i <regarr.length; i++) {
+          //		p.user=p.user.replace(regarr[i],'');
+          //		p.email=p.email.replace(regarr[i],'');
+		  //		if(p.weburl){
+	      //		p.weburl=p.weburl.replace(regarr[i],'');
+		  //	}
+          // 	  p.text=p.text.replace(regarr[i],'');
+          //}
+		  p.user=xss(p.user);
+		  p.email=xss(p.email);
+		  p.text=xss(p.text);
+		  if(p.weburl){
+			p.weburl=xss(p.weburl);
+		  }
           db.query("INSERT INTO `hco`.`"+parseInt(p.id)+"` (`id`, `user`, `email`, `weburl`, `cid`,`time`, `text`) VALUES (NULL, "+db.escape(p.user)+", "+db.escape(p.email)+", "+db.escape(p.weburl)+","+db.escape(p.cid)+","+xtime+","+db.escape(p.text) +")", function(err, rows, fields) {
           res.end(`{"success":1,"container":"发送成功","time":"${xtime}"}`);
 		      console.log(`发送成功:${p.id}内容:${p.text}`)
