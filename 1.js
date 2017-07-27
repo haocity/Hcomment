@@ -9,7 +9,7 @@ var db;
   function handleConnect() {
       db = mysql.createConnection({
       host     : 'localhost',
-      user     : 'root',
+      user     : 'user',
       password : 'password',
       database : 'hco'
     }); 
@@ -37,7 +37,7 @@ http.createServer(function(req, res){
           handleConnect();
 		  console.log('查询id: '+getobj.id+'的评论');
 		   db.query('CREATE TABLE IF NOT EXISTS `'+getobj.id+'`(`id` int(8) NOT NULL AUTO_INCREMENT,`user` char(30) NOT NULL, `email` char(20) NOT NULL,`weburl` char(20) DEFAULT NULL,`cid` char(20) NOT NULL,`time` char(30) NOT NULL,`text` text NOT NULL,PRIMARY KEY (`id`))');
-           db.query('SELECT * FROM `'+parseInt(getobj.id)+'`ORDER BY `id`', function(err, rows, fields) {
+           db.query('SELECT * FROM `'+getobj.id+'`ORDER BY `id`', function(err, rows, fields) {
            if (err){
               res.end('{"success":0,"data":[{"id":0,"time":10,"text":"链接弹幕失败￣□￣｜｜","color":"#fff","place":1}]}');
 			}
@@ -88,7 +88,7 @@ http.createServer(function (req, res) {
 		  if(p.weburl){
 			p.weburl=xss(p.weburl);
 		  }
-          db.query("INSERT INTO `hco`.`"+parseInt(p.id)+"` (`id`, `user`, `email`, `weburl`, `cid`,`time`, `text`) VALUES (NULL, "+db.escape(p.user)+", "+db.escape(p.email)+", "+db.escape(p.weburl)+","+db.escape(p.cid)+","+xtime+","+db.escape(p.text) +")", function(err, rows, fields) {
+          db.query("INSERT INTO `hco`.`"+p.id+"` (`id`, `user`, `email`, `weburl`, `cid`,`time`, `text`) VALUES (NULL, "+db.escape(p.user)+", "+db.escape(p.email)+", "+db.escape(p.weburl)+","+db.escape(p.cid)+","+xtime+","+db.escape(p.text) +")", function(err, rows, fields) {
           res.end(`{"success":1,"container":"发送成功","time":"${xtime}"}`);
 		      console.log(`发送成功:${p.id}内容:${p.text}`)
             db.end();
