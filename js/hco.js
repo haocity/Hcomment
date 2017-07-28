@@ -146,7 +146,7 @@
 				const xdom=`<div class="ew-li-main">
 							<div class="ew-li-logo" style="background-image:url(https://v2ex.assets.uxengine.net/gravatar/${MD5(email)}?s=80&d=retro)"></div>
 							<div class="ew-li-com-w">
-								<div class="ew-li-user"><a href="${weburl}">${name}</a></div>
+								<div class="ew-li-user"><a href="${weburl}" target="_blank">${name}</a></div>
 								<div class="ew-li-time">${_this.gettime(time)}</div>
 								<pre class="ew-li-com">${str}</pre>
 							</div>
