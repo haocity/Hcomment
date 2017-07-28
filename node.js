@@ -6,7 +6,18 @@ var querystring = require('querystring');
 var mysql      = require('mysql');
 var xss = require('xss');
 var db;
-  function handleConnect() {
+var nodemailer = require("nodemailer");
+// 开启一个 SMTP 连接池
+var transporter =nodemailer.createTransport({
+  host: "smtp.qq.com", // 主机
+  secureConnection: true, // 使用 SSL
+  port: 465, // SMTP 端口
+  auth: {
+    user: "my@haotown.cn", // 账号
+    pass: "password" // 密码
+  }
+});
+function handleConnect() {
       db = mysql.createConnection({
       host     : 'localhost',
       user     : 'user',
@@ -90,8 +101,31 @@ http.createServer(function (req, res) {
 		  }
           db.query("INSERT INTO `hco`.`"+p.id+"` (`id`, `user`, `email`, `weburl`, `cid`,`time`, `text`) VALUES (NULL, "+db.escape(p.user)+", "+db.escape(p.email)+", "+db.escape(p.weburl)+","+db.escape(p.cid)+","+xtime+","+db.escape(p.text) +")", function(err, rows, fields) {
           res.end(`{"success":1,"container":"发送成功","time":"${xtime}"}`);
-		      console.log(`发送成功:${p.id}内容:${p.text}`)
-            db.end();
+		      console.log(`发送成功:${p.id}内容:${p.text}`);
+		      db.end();
+		      if(p.pm&&p.url&&p.title){
+						var mailOptions = {
+						  from: "Hco评论<my@haotown.cn>", // 发件地址
+						  to: p.pm, // 收件列表
+						  subject: `你有一条新的回复 《${p.title}》`, 
+						  html: `<div style="background-color:white;border-top: 2px solid #dc8b8b;box-shadow: 0 1px 3px #AAAAAA;line-height:180%;padding:0 15px 12px;width:500px;margin:50px auto;color:#555555;font-family:'Century Gothic','Trebuchet MS','Hiragino Sans GB',微软雅黑,'Microsoft Yahei',Tahoma,Helvetica,Arial,'SimSun',sans-serif;font-size:12px;">  
+			        <h2 style="border-bottom:1px solid #DDD;font-size:14px;font-weight:normal;padding:13px 0 10px 8px;"><span style="color: #12ADDB;font-weight: bold;">&gt; </span>您在<a style="text-decoration:none;color: #12ADDB;" href="${p.url}" target="_blank">《${p.title}》</a>的评论有了新的回复</h2>  
+			        <div style="padding:0 12px 0 12px;margin-top:18px">  
+			        <p>时间：<span style="border-bottom:1px dashed #ccc;" t="5" times=" 20:42"><span style="border-bottom:1px dashed #ccc;" t="5" times=" 16:45">${new Date()}</span> 16:45:22</span></p>  
+			        <p><strong>jeff</strong>&nbsp;回复说：</p>  
+			            <p style="background-color: #f5f5f5;border: 0px solid #DDD;padding: 10px 15px;margin:18px 0">${p.text}</p>  
+			            <p>您可以点击 <a style="text-decoration:none; color:#12addb" href="${p.url}" target="_blank">查看回复的完整內容 </a>，本邮件为自动发送，请勿直接回复</p>  
+			       	</div></div> `;
+						}
+						// 发送邮件
+						transporter.sendMail(mailOptions, (error, info) => {
+						    if (error) {
+						        return console.log(error);
+						    }
+						    console.log('Message %s sent: %s', info.messageId, info.response);
+						});
+		      }
+         
           })
       } else {  
           res.end('{"success":0,"data":[{"text":"参数错误￣□￣｜｜"}]}');
