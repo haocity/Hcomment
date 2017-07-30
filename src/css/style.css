@@ -1,15 +1,6 @@
-body {
-	background-color: #EEE;
-}
-
 .ew-comment {
 	padding: 15px 10px;
 	position: relative;
-}
-
-.comment {
-	width: 800px;
-	margin: 0 auto;
 }
 
 .ew-publish {
@@ -124,6 +115,9 @@ body {
 
 .ew-li-com-w>.ew-li-com {
 	margin-left: 90px;
+	font-family: Avenir Next,Helvetica,Arial,Lantinghei SC,Microsoft YaHei,sans-serif;
+	word-wrap: break-word;
+    white-space: normal;
 }
 
 .ew-li-com-w>.ew-li-user,.ew-li-com-w>.ew-li-time {
@@ -160,7 +154,7 @@ body {
 	cursor: pointer;
 }
 
-.ew-li-main>.ew-li-next {
+.ew-li-next {
 	margin-left: 50px;
 }
 
@@ -201,5 +195,13 @@ body {
 
 	to {
 		transform: scale3d(1, 1, 1);
+	}
+}
+@media only screen and (min-width: 100px) and (max-width: 800px) {
+	.ew-info>.ew-send-btn{
+		position: relative;
+		top: 6px;
+		width: 100%;
+		box-shadow:none;
 	}
 }
