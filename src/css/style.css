@@ -204,4 +204,8 @@
 		width: 100%;
 		box-shadow:none;
 	}
+	.ew-info>.text-block{
+    	width: 28%;
+    	box-sizing: content-box;
+	}
 }

@@ -10,11 +10,7 @@ window.Hco=function(ele,webid,id){
 					<div class="ew-textarea-warp">
 						<textarea node-type="textarea" name="" class="ew-textarea" placeholder="评论.." autocomplete="off" spellcheck="false"></textarea>
 					</div>
-					<div class="ew-info">
-						<input class="text-block ew-author"  name="author" type="text" value="" size="30" placeholder="昵称 *" autocomplete="off">
-						<input class="text-block ew-email"  name="email" type="email" value="" size="30" placeholder="邮箱 *" autocomplete="off">
-						<input class="text-block ew-weburl"  name="url" type="url" value="" size="30" placeholder="网址" autocomplete="off">
-						<div class="ew-send-btn">发送</div>
+					<div class="ew-info"><input class="text-block ew-author"  name="author" type="text" value="" size="30" placeholder="昵称 *" autocomplete="off"><input class="text-block ew-email"  name="email" type="email" value="" size="30" placeholder="邮箱 *" autocomplete="off"><input class="text-block ew-weburl"  name="url" type="url" value="" size="30" placeholder="网址" autocomplete="off"><div class="ew-send-btn">发送</div>
 					</div>
 				</div>
 				<div class="ew-bar">喵喵</div>
@@ -101,7 +97,7 @@ window.Hco=function(ele,webid,id){
 					temp=new Date(timed).getHours()+'小时前';
 				}else{
 					let t=new Date(parseInt(time));
-					temp=t.getFullYear()+'年'+t.getMonth()+'月'+t.getDay()+'日'
+					temp=t.getFullYear()+'年'+(t.getMonth()+1)+'月'+t.getDate()+'日'
 				}
 				return temp;
 		}
