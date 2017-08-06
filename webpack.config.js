@@ -1,5 +1,14 @@
+const webpack = require('webpack')
 var path = require('path');
 module.exports = {
+	plugins: [
+	new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      },
+      comments: false
+   })
+	],
   entry: './src/index.js',
   output: {
     filename: 'hco.js',
