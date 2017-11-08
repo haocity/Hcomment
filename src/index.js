@@ -51,7 +51,7 @@ class Hco{
 				_this.publish.className='ew-publish';
 				const earr=document.querySelectorAll('.ew-li-main');
 				for (let i = 0; i <earr.length; i++) {
-					if(earr[i].style.marginBottom){earr[i].style.marginBottom='auto'}
+					if(earr[i].style.marginBottom){earr[i].style.marginBottom='4px'}
 				}
 			},false);
 			_this.update();

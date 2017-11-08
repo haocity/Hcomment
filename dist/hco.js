@@ -171,7 +171,7 @@ var Hco = function () {
 				var earr = document.querySelectorAll('.ew-li-main');
 				for (var i = 0; i < earr.length; i++) {
 					if (earr[i].style.marginBottom) {
-						earr[i].style.marginBottom = 'auto';
+						earr[i].style.marginBottom = '4px';
 					}
 				}
 			}, false);
