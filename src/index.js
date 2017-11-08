@@ -1,13 +1,14 @@
 require('./css/style.css');
 var MD5 = require('md5');
-import html from './html.js';
+import {html,html2} from './html.js';
+
 class Hco{
 	constructor(ele,webid,id){
 			var warp=document.createElement('div');
 			this.ele=warp;
 			this.cid=webid+'_'+id;
 			warp.className='ew-comment';
-			warp.innerHTML=html.html('hcomment');
+			warp.innerHTML=html('hcomment');
 			if(typeof ele=="string"){
 				ele=document.querySelector(ele);
 			}
@@ -139,16 +140,8 @@ class Hco{
 				}else{
 					console.log('数据可能存在错误')
 				}
-				const xdom=`<div class="ew-li-main">
-							<div class="ew-li-logo" style="background-image:url(https://v2ex.assets.uxengine.net/gravatar/${MD5(email)}?s=80&d=retro)"></div>
-							<div class="ew-li-com-w">
-								<div class="ew-li-user"><a href="${weburl}" target="_blank">${name}</a></div>
-								<div class="ew-li-time">${_this.gettime(time)}</div>
-								<pre class="ew-li-com">${str}</pre>
-							</div>
-						</div>
-						<div class="ew-li-next"></div>
-						</div>`;
+				const xdom=html2("https://v2ex.assets.uxengine.net/gravatar/"+MD5(email)+"?s=80&d=retro",weburl,name,_this.gettime(time),str);
+				//commenthtml
 				warp.innerHTML=xdom;
 				warp.m=email;
 				let btn=document.createElement('div');
