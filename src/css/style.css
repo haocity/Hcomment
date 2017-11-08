@@ -111,6 +111,7 @@
 	overflow: hidden;
 	border-left: 7px solid #fb9b79;
 	margin-bottom: 4px;
+	background-color: #fdfdfd;
 }
 
 .ew-li-com-w>.ew-li-com {
@@ -152,6 +153,9 @@
 	float: right;
 	color: #E88678;
 	cursor: pointer;
+	position: relative;
+    right: 10px;
+    bottom: 5px;
 }
 
 .ew-li-next {

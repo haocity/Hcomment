@@ -1,17 +1,23 @@
 require('./css/style.css');
 var MD5 = require('md5');
 import html from './html.js';
-window.Hco=function(ele,webid,id){
+class Hco{
+	constructor(ele,webid,id){
 			var warp=document.createElement('div');
 			this.ele=warp;
 			this.cid=webid+'_'+id;
 			warp.className='ew-comment';
-			warp.innerHTML=html.html();
+			warp.innerHTML=html.html('hcomment');
 			if(typeof ele=="string"){
 				ele=document.querySelector(ele);
 			}
 			ele.appendChild(warp);
-			var _this=this;
+		 	this.init(ele)
+			
+	}
+	
+	init(ele){
+			let _this=this;
 			function $c(i){
 				return ele.querySelector(i);
 			}
@@ -28,7 +34,7 @@ window.Hco=function(ele,webid,id){
 		       $c('.ew-email').value=t.email;
 		       $c('.ew-author').value=t.user;
 		       $c('.ew-weburl').value=t.weburl;
-		   }
+		  }
 			//ctrl和enter按下发送评论
 			$c('.ew-textarea').addEventListener('keydown',function(event){
 				if(event.keyCode == 13 && event.ctrlKey){
@@ -48,9 +54,10 @@ window.Hco=function(ele,webid,id){
 				}
 			},false);
 			_this.update();
-		}
-		//提示框
-		Hco.prototype.alert=(s)=>{
+		
+	}
+			//提示框
+		alert(s){
 				var e=document.createElement('div');
 				e.className='ew-alert';
 				e.innerText=s;
@@ -61,7 +68,7 @@ window.Hco=function(ele,webid,id){
 				},1900);
 		}
 		//计算是几楼
-		Hco.prototype.getfloor=(temp)=>{
+		getfloor(temp){
 				let lc='#';
 				const str=temp.toString();
 				const arr=str.split('-');
@@ -75,8 +82,8 @@ window.Hco=function(ele,webid,id){
 				}
 				return lc;
 			}
-			//时间计算
-		Hco.prototype.gettime=(time)=>{
+		//时间计算
+		gettime(time){
 				let temp;
 				const nowtime=new Date().getTime();
 				let timed=nowtime-time;
@@ -94,7 +101,7 @@ window.Hco=function(ele,webid,id){
 		}
 		
 		//更新评论
-		Hco.prototype.update=function(k){
+		update(k){
 				let _this=this;
 				let xmlhttp=new XMLHttpRequest();
 				xmlhttp.onreadystatechange=function()
@@ -119,7 +126,7 @@ window.Hco=function(ele,webid,id){
 				xmlhttp.send();
 		}
 		//输出评论
-		Hco.prototype.sendcom=function(id,name,email,weburl,time,str){
+		sendcom(id,name,email,weburl,time,str){
 			let _this=this;
 				const warp= document.createElement('div');
 				let number;
@@ -155,8 +162,8 @@ window.Hco=function(ele,webid,id){
 					}
 					const e=warp.querySelector('.ew-li-main');
 					_this.publish.className='ew-publish ew-publish-fly';
-					_this.publish.style.top=`${e.offsetHeight+e.offsetTop}px`;
-					e.style.marginBottom='250px';
+					_this.publish.style.top=`${e.offsetHeight+e.offsetTop+6}px`;
+					e.style.marginBottom='210px';
 					_this.$c('.ew-publish-title-lc').innerHTML=_this.getfloor(this.i);
 				},false);
 				warp.querySelector('.ew-li-main>.ew-li-com-w').appendChild(btn);
@@ -171,11 +178,11 @@ window.Hco=function(ele,webid,id){
 				}
 			}
 		//提交
-		Hco.prototype.submitfun=function(){
+		submitfun(){
 				var _this=this;
 				//验证url,e-mail
 				var mailreg=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-				if(_this.$c('.ew-textarea').value.length<=6){
+				if(_this.$c('.ew-textarea').value.length<=2){
 					_this.alert('内容太短了')
 				}else if(!_this.$c('.ew-author').value){
 					_this.alert('请输入用户名')
@@ -236,3 +243,9 @@ window.Hco=function(ele,webid,id){
 		        //发送end	
 			}	
 		}
+	
+}
+window.Hco=Hco;
+
+
+
