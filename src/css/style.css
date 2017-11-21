@@ -82,8 +82,8 @@
 	position: absolute;
 	right: 0;
 	top: -4px;
-	width: 130px;
-	background-color: #3d3ad6;
+	width: 108px;
+    background-color: #3b9bf1;
 	color: #fff;
 	text-align: center;
 	line-height: 40px;
@@ -93,7 +93,7 @@
 }
 
 .ew-bar {
-	background-color: #4a54d4;
+	background-color: #2483d8;
 	color: #FFFFFF;
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -108,7 +108,7 @@
 
 .ew-li-main {
 	overflow: hidden;
-	border-left: 7px solid #5f5cf1;
+	border-left: 7px solid #2483d8;
 	margin-bottom: 4px;
 	background-color: #fdfdfd;
 }

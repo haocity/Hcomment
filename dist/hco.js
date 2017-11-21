@@ -126,7 +126,7 @@ var Hco = function () {
 		this.ele = warp;
 		this.cid = webid + '_' + id;
 		warp.className = 'ew-comment';
-		warp.innerHTML = (0, _html.html)('hcomment');
+		warp.innerHTML = (0, _html.html)('评论');
 		if (typeof ele == "string") {
 			ele = document.querySelector(ele);
 		}
@@ -155,6 +155,7 @@ var Hco = function () {
 				$c('.ew-author').value = t.user;
 				$c('.ew-weburl').value = t.weburl;
 			}
+			this.changersize();
 			//ctrl和enter按下发送评论
 			$c('.ew-textarea').addEventListener('keydown', function (event) {
 				if (event.keyCode == 13 && event.ctrlKey) {
@@ -175,7 +176,26 @@ var Hco = function () {
 					}
 				}
 			}, false);
+			window.addEventListener('resize', function () {
+				_this.changersize();
+			});
 			_this.update();
+		}
+	}, {
+		key: 'changersize',
+		value: function changersize() {
+			var we = this.ele.querySelector(".ew-info");
+			var w1 = we.offsetWidth;
+			var arr = we.querySelectorAll("input");
+			for (var i = 0; i < arr.length; i++) {
+				if (w1 > 800) {
+					arr[i].style.marginRight = "7px";
+					arr[i].style.width = (w1 - 200) / 3 + 'px';
+				} else {
+					arr[i].style.marginRight = "";
+					arr[i].style.width = "";
+				}
+			}
 		}
 		//提示框
 
@@ -250,6 +270,7 @@ var Hco = function () {
 							_this.$c('.ew-id-' + k + '>.ew-li-main>.ew-li-com-w>.ew-li-reply').click();
 						}
 					}
+					_this.ele.querySelector('.ew-bar').innerHTML = 1 + json.data.length + "条评论";
 				}
 			};
 
@@ -444,7 +465,7 @@ exports = module.exports = __webpack_require__(5)(undefined);
 
 
 // module
-exports.push([module.i, ".ew-comment {\r\n\tpadding: 15px 10px;\r\n\tposition: relative;\r\n}\r\n\r\n.ew-publish {\r\n\toverflow: hidden;\r\n}\r\n\r\n.ew-publish-fly {\r\n\tposition: absolute;\r\n\ttop: 256px;\r\n\twidth: 100%;\r\n\tleft: 0;\r\n}\r\n\r\n.ew-publish-title {\r\n\tfont-size: 16px;\r\n\tpadding: 10px 0;\r\n\tfont-weight: 500;\r\n\tcolor: #565656;\r\n}\r\n\r\n.ew-publish-title-lc {\r\n\tcolor: #969292;\r\n\tdisplay: none;\r\n}\r\n\r\n.ew-publish-back {\r\n\tcolor: #e07e7e;\r\n\tdisplay: none;\r\n\tcursor: pointer;\r\n\tmargin-left: 30px;\r\n}\r\n\r\n.ew-publish-fly .ew-publish-back,.ew-publish-fly .ew-publish-title-lc {\r\n\tdisplay: inline-block;\r\n}\r\n\r\n.ew-textarea-warp {\r\n\t\t\t/*margin-left: 100px;*/\r\n\tbackground-color: #fff;\r\n\tborder-radius: 12px;\r\n\tpadding: 6px;\r\n\t\t\t/*background: #FFFFFF bottom right 20px no-repeat url(https://www.haotown.cn/changyan/3.png);*/\r\n\t\t\t/*box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);*/\r\n\tborder: 1px solid #d0d0d0;\r\n}\r\n\r\n.ew-textarea {\r\n\twidth: 100%;\r\n\theight: 70px;\r\n\tbackground: 0 0;\r\n\toverflow-x: hidden;\r\n\toverflow-y: auto;\r\n\tborder: 0;\r\n\tfont-size: 14px;\r\n\tcolor: #333;\r\n\tresize: none;\r\n\tline-height: normal;\r\n\ttext-align: left;\r\n\toutline: medium;\r\n}\r\n\r\n.ew-info {\r\n\tmargin-top: 20px;\r\n\tmargin-bottom: 10px;\r\n\tposition: relative;\r\n}\r\n\r\n.ew-info>.text-block {\r\n\theight: 25px;\r\n\twidth: 24%;\r\n\tmargin-right: 2%;\r\n\tborder: 1px solid #b5b5b5;\r\n\tborder-radius: 4px;\r\n\tpadding: 0 4px;\r\n\toutline: none;\r\n}\r\n\r\n.ew-info>.ew-send-btn {\r\n\tposition: absolute;\r\n\tright: 0;\r\n\ttop: -4px;\r\n\twidth: 130px;\r\n\tbackground-color: #3d3ad6;\r\n\tcolor: #fff;\r\n\ttext-align: center;\r\n\tline-height: 40px;\r\n\tfont-size: 20px;\r\n\tborder-radius: 10px;\r\n\tcursor: pointer;\r\n}\r\n\r\n.ew-bar {\r\n\tbackground-color: #4a54d4;\r\n\tcolor: #FFFFFF;\r\n\tmargin-top: 10px;\r\n\tmargin-bottom: 10px;\r\n\tfont-size: 15px;\r\n\tline-height: 32px;\r\n\tpadding: 0 17px;\r\n}\r\n\r\n.ew-li {\r\n\toverflow: hidden;\r\n}\r\n\r\n.ew-li-main {\r\n\toverflow: hidden;\r\n\tborder-left: 7px solid #5f5cf1;\r\n\tmargin-bottom: 4px;\r\n\tbackground-color: #fdfdfd;\r\n}\r\n\r\n.ew-li-com-w>.ew-li-com {\r\n\tmargin-left: 90px;\r\n\tfont-family: Avenir Next,Helvetica,Arial,Lantinghei SC,Microsoft YaHei,sans-serif;\r\n\tword-wrap: break-word;\r\n    white-space: normal;\r\n}\r\n\r\n.ew-li-com-w>.ew-li-user,.ew-li-com-w>.ew-li-time {\r\n\tdisplay: inline-block;\r\n\tcolor: #3a3a3a;\r\n\tfont-size: 15px;\r\n\tmargin-top: 12px;\r\n}\r\n\r\n.ew-li-user>a {\r\n\tcolor: #3a3a3a;\r\n\tfont-size: 15px;\r\n\ttext-decoration: none;\r\n}\r\n\r\n.ew-li-time {\r\n\tcolor: #797878;\r\n\tmargin-left: 10px;\r\n}\r\n\r\n.ew-li-main>.ew-li-logo {\r\n\tmargin: 16px 20px 16px 10px;\r\n\tbackground-image: url(https://0d077ef9e74d8.cdn.sohucs.com/clip_picture_1486299863299);\r\n\twidth: 60px;\r\n\theight: 60px;\r\n\tbackground-size: cover;\r\n\tborder-radius: 50%;\r\n\tfloat: left;\r\n}\r\n\r\n.ew-li-reply {\r\n\tfloat: right;\r\n\tcolor: #E88678;\r\n\tcursor: pointer;\r\n\tposition: relative;\r\n    right: 10px;\r\n    bottom: 5px;\r\n}\r\n\r\n.ew-li-next {\r\n\tmargin-left: 50px;\r\n}\r\n\r\n.ew-alert {\r\n\tposition: fixed;\r\n\twidth: 300px;\r\n\theight: 80px;\r\n\tbackground-color: rgba(51, 51, 51, 0.56);\r\n\tleft: 0;\r\n\tright: 0;\r\n\ttop: 0;\r\n\tbottom: 0;\r\n\tmargin: auto;\r\n\tline-height: 80px;\r\n\tz-index: 999;\r\n\tcolor: #fff;\r\n\ttext-align: center;\r\n\tfont-size: 25px;\r\n\tanimation: 0.8s tada;\r\n}\r\n\r\n@keyframes tada {\r\n\tfrom {\r\n\t\ttransform: scale3d(1, 1, 1);\r\n\t}\r\n\r\n\t10%, 20% {\r\n\t\ttransform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);\r\n\t}\r\n\r\n\t30%, 50%, 70%, 90% {\r\n\t\ttransform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);\r\n\t}\r\n\r\n\t40%, 60%, 80% {\r\n\t\ttransform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);\r\n\t}\r\n\r\n\tto {\r\n\t\ttransform: scale3d(1, 1, 1);\r\n\t}\r\n}\r\n@media only screen and (min-width: 100px) and (max-width: 800px) {\r\n\t.ew-info>.ew-send-btn{\r\n\t\tposition: relative;\r\n\t\ttop: 6px;\r\n\t\twidth: 100%;\r\n\t\tbox-shadow:none;\r\n\t}\r\n\t.ew-info>.text-block{\r\n    \twidth: 28%;\r\n    \tbox-sizing: content-box;\r\n\t}\r\n}", ""]);
+exports.push([module.i, ".ew-comment {\r\n\tpadding: 15px 10px;\r\n\tposition: relative;\r\n}\r\n\r\n.ew-publish {\r\n\toverflow: hidden;\r\n}\r\n\r\n.ew-publish-fly {\r\n\tposition: absolute;\r\n\ttop: 256px;\r\n\twidth: 100%;\r\n\tleft: 0;\r\n}\r\n\r\n.ew-publish-title {\r\n\tfont-size: 16px;\r\n\tpadding: 10px 0;\r\n\tfont-weight: 500;\r\n\tcolor: #565656;\r\n}\r\n\r\n.ew-publish-title-lc {\r\n\tcolor: #969292;\r\n\tdisplay: none;\r\n}\r\n\r\n.ew-publish-back {\r\n\tcolor: #e07e7e;\r\n\tdisplay: none;\r\n\tcursor: pointer;\r\n\tmargin-left: 30px;\r\n}\r\n\r\n.ew-publish-fly .ew-publish-back,.ew-publish-fly .ew-publish-title-lc {\r\n\tdisplay: inline-block;\r\n}\r\n\r\n.ew-textarea-warp {\r\n\t\t\t/*margin-left: 100px;*/\r\n\tbackground-color: #fff;\r\n\tborder-radius: 12px;\r\n\tpadding: 6px;\r\n\t\t\t/*background: #FFFFFF bottom right 20px no-repeat url(https://www.haotown.cn/changyan/3.png);*/\r\n\t\t\t/*box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);*/\r\n\tborder: 1px solid #d0d0d0;\r\n}\r\n\r\n.ew-textarea {\r\n\twidth: 100%;\r\n\theight: 70px;\r\n\tbackground: 0 0;\r\n\toverflow-x: hidden;\r\n\toverflow-y: auto;\r\n\tborder: 0;\r\n\tfont-size: 14px;\r\n\tcolor: #333;\r\n\tresize: none;\r\n\tline-height: normal;\r\n\ttext-align: left;\r\n\toutline: medium;\r\n}\r\n\r\n.ew-info {\r\n\tmargin-top: 20px;\r\n\tmargin-bottom: 10px;\r\n\tposition: relative;\r\n}\r\n\r\n.ew-info>.text-block {\r\n\theight: 25px;\r\n\twidth: 24%;\r\n\tmargin-right: 2%;\r\n\tborder: 1px solid #b5b5b5;\r\n\tborder-radius: 4px;\r\n\tpadding: 0 4px;\r\n\toutline: none;\r\n}\r\n\r\n.ew-info>.ew-send-btn {\r\n\tposition: absolute;\r\n\tright: 0;\r\n\ttop: -4px;\r\n\twidth: 108px;\r\n    background-color: #3b9bf1;\r\n\tcolor: #fff;\r\n\ttext-align: center;\r\n\tline-height: 40px;\r\n\tfont-size: 20px;\r\n\tborder-radius: 10px;\r\n\tcursor: pointer;\r\n}\r\n\r\n.ew-bar {\r\n\tbackground-color: #2483d8;\r\n\tcolor: #FFFFFF;\r\n\tmargin-top: 10px;\r\n\tmargin-bottom: 10px;\r\n\tfont-size: 15px;\r\n\tline-height: 32px;\r\n\tpadding: 0 17px;\r\n}\r\n\r\n.ew-li {\r\n\toverflow: hidden;\r\n}\r\n\r\n.ew-li-main {\r\n\toverflow: hidden;\r\n\tborder-left: 7px solid #2483d8;\r\n\tmargin-bottom: 4px;\r\n\tbackground-color: #fdfdfd;\r\n}\r\n\r\n.ew-li-com-w>.ew-li-com {\r\n\tmargin-left: 90px;\r\n\tfont-family: Avenir Next,Helvetica,Arial,Lantinghei SC,Microsoft YaHei,sans-serif;\r\n\tword-wrap: break-word;\r\n    white-space: normal;\r\n}\r\n\r\n.ew-li-com-w>.ew-li-user,.ew-li-com-w>.ew-li-time {\r\n\tdisplay: inline-block;\r\n\tcolor: #3a3a3a;\r\n\tfont-size: 15px;\r\n\tmargin-top: 12px;\r\n}\r\n\r\n.ew-li-user>a {\r\n\tcolor: #3a3a3a;\r\n\tfont-size: 15px;\r\n\ttext-decoration: none;\r\n}\r\n\r\n.ew-li-time {\r\n\tcolor: #797878;\r\n\tmargin-left: 10px;\r\n}\r\n\r\n.ew-li-main>.ew-li-logo {\r\n\tmargin: 16px 20px 16px 10px;\r\n\tbackground-image: url(https://0d077ef9e74d8.cdn.sohucs.com/clip_picture_1486299863299);\r\n\twidth: 60px;\r\n\theight: 60px;\r\n\tbackground-size: cover;\r\n\tborder-radius: 50%;\r\n\tfloat: left;\r\n}\r\n\r\n.ew-li-reply {\r\n\tfloat: right;\r\n\tcolor: #E88678;\r\n\tcursor: pointer;\r\n\tposition: relative;\r\n    right: 10px;\r\n    bottom: 5px;\r\n}\r\n\r\n.ew-li-next {\r\n\tmargin-left: 50px;\r\n}\r\n\r\n.ew-alert {\r\n\tposition: fixed;\r\n\twidth: 300px;\r\n\theight: 80px;\r\n\tbackground-color: rgba(51, 51, 51, 0.56);\r\n\tleft: 0;\r\n\tright: 0;\r\n\ttop: 0;\r\n\tbottom: 0;\r\n\tmargin: auto;\r\n\tline-height: 80px;\r\n\tz-index: 999;\r\n\tcolor: #fff;\r\n\ttext-align: center;\r\n\tfont-size: 25px;\r\n\tanimation: 0.8s tada;\r\n}\r\n\r\n@keyframes tada {\r\n\tfrom {\r\n\t\ttransform: scale3d(1, 1, 1);\r\n\t}\r\n\r\n\t10%, 20% {\r\n\t\ttransform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);\r\n\t}\r\n\r\n\t30%, 50%, 70%, 90% {\r\n\t\ttransform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);\r\n\t}\r\n\r\n\t40%, 60%, 80% {\r\n\t\ttransform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);\r\n\t}\r\n\r\n\tto {\r\n\t\ttransform: scale3d(1, 1, 1);\r\n\t}\r\n}\r\n@media only screen and (min-width: 100px) and (max-width: 800px) {\r\n\t.ew-info>.ew-send-btn{\r\n\t\tposition: relative;\r\n\t\ttop: 6px;\r\n\t\twidth: 100%;\r\n\t\tbox-shadow:none;\r\n\t}\r\n\t.ew-info>.text-block{\r\n    \twidth: 28%;\r\n    \tbox-sizing: content-box;\r\n\t}\r\n}", ""]);
 
 // exports
 

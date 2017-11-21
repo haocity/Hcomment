@@ -8,7 +8,7 @@ class Hco{
 			this.ele=warp;
 			this.cid=webid+'_'+id;
 			warp.className='ew-comment';
-			warp.innerHTML=html('hcomment');
+			warp.innerHTML=html('评论');
 			if(typeof ele=="string"){
 				ele=document.querySelector(ele);
 			}
@@ -36,6 +36,7 @@ class Hco{
 		       $c('.ew-author').value=t.user;
 		       $c('.ew-weburl').value=t.weburl;
 		  }
+			this.changersize();
 			//ctrl和enter按下发送评论
 			$c('.ew-textarea').addEventListener('keydown',function(event){
 				if(event.keyCode == 13 && event.ctrlKey){
@@ -54,10 +55,30 @@ class Hco{
 					if(earr[i].style.marginBottom){earr[i].style.marginBottom='4px'}
 				}
 			},false);
+			window.addEventListener('resize',function(){
+				_this.changersize()
+			})
 			_this.update();
+			
 		
 	}
-			//提示框
+	
+		
+		changersize(){
+			let we=this.ele.querySelector(".ew-info");
+			let w1=we.offsetWidth;
+			let arr=we.querySelectorAll("input")
+			for (var i = 0; i < arr.length; i++) {
+				if(w1>800){
+					arr[i].style.marginRight="7px";
+					arr[i].style.width=(w1-200)/3+'px'
+				}else{
+					arr[i].style.marginRight=""
+					arr[i].style.width=""
+				}
+			}
+		}
+		//提示框
 		alert(s){
 				var e=document.createElement('div');
 				e.className='ew-alert';
@@ -120,6 +141,7 @@ class Hco{
 								_this.$c('.ew-id-'+k+'>.ew-li-main>.ew-li-com-w>.ew-li-reply').click();
 							}
 						}
+						_this.ele.querySelector('.ew-bar').innerHTML=1+json.data.length+"条评论"
 					}
 				}
 			
