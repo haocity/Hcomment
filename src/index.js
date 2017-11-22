@@ -141,7 +141,7 @@ class Hco{
 								_this.$c('.ew-id-'+k+'>.ew-li-main>.ew-li-com-w>.ew-li-reply').click();
 							}
 						}
-						_this.ele.querySelector('.ew-bar').innerHTML=1+json.data.length+"条评论"
+						_this.ele.querySelector('.ew-bar').innerHTML=json.data.length+"条评论"
 					}
 				}
 			
