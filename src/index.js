@@ -107,8 +107,10 @@ class Hco{
 		//时间计算
 		gettime(time){
 				let temp;
+				const nowdate=new Date();
+			  	const c=nowdate.getTimezoneOffset();
 				const nowtime=new Date().getTime();
-				let timed=nowtime-time;
+				let timed=nowtime-time-c*60000;
 				if(timed<60000){
 					temp='刚刚';
 				}else if(timed<60000*60){
