@@ -106,25 +106,21 @@ class Hco{
 			}
 		//时间计算
 		gettime(time){
-		  	let temp;
-		  	//时区
-		  	const nowdate=new Date();
-		  	const c=nowdate.getTimezoneOffset();
-			const nowtime=new Date().getTime();
-			
-			let timed=nowtime-time-c*60000;
-			if(timed<60000){
-				temp='刚刚';
-			}else if(timed<60000*60){
-				temp=new Date(timed).getMinutes()+'分钟前';
-			}else if(timed<60000*60*24){
-				temp=new Date(timed).getHours()+'小时前';
-			}else{
-				let t=new Date(parseInt(time));
-				temp=t.getFullYear()+'年'+(t.getMonth()+1)+'月'+t.getDate()+'日'
-			}
-			return temp;
-		 }
+				let temp;
+				const nowtime=new Date().getTime();
+				let timed=nowtime-time;
+				if(timed<60000){
+					temp='刚刚';
+				}else if(timed<60000*60){
+					temp=new Date(timed).getMinutes()+'分钟前';
+				}else if(timed<60000*60*24){
+					temp=new Date(timed).getHours()+'小时前';
+				}else{
+					let t=new Date(parseInt(time));
+					temp=t.getFullYear()+'年'+(t.getMonth()+1)+'月'+t.getDate()+'日'
+				}
+				return temp;
+		}
 		
 		//更新评论
 		update(k){
@@ -145,7 +141,7 @@ class Hco{
 								_this.$c('.ew-id-'+k+'>.ew-li-main>.ew-li-com-w>.ew-li-reply').click();
 							}
 						}
-						_this.ele.querySelector('.ew-bar').innerHTML=json.data.length+"条评论"
+						_this.ele.querySelector('.ew-bar').innerHTML=1+json.data.length+"条评论"
 					}
 				}
 			
