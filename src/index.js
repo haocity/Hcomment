@@ -29,7 +29,7 @@ class Hco{
 			this.api='https://t5.haotown.cn/hcon';
 			this.publish=$c('.ew-publish');
 			//加载本地储存的信息
-			if (localStorage.getItem('ew')) {
+			if (localStorage&&localStorage.getItem('ew')) {
 		       console.log('加载设置成功');
 		       let t=JSON.parse(localStorage.getItem('ew'));
 		       $c('.ew-email').value=t.email;
@@ -86,7 +86,7 @@ class Hco{
 				document.body.appendChild(e);
 				setTimeout(function(){
 					e.style.display='none';
-					e.remove();
+					e.parentNode.removeChild(e);
 				},1900);
 		}
 		//计算是几楼
@@ -249,7 +249,10 @@ class Hco{
 									_this.alert('评论成功');
 									_this.$c('.ew-textarea').value='';
 									var c=`{"user":"${_this.$c('.ew-author').value}","email":"${_this.$c('.ew-email').value}","weburl":"${_this.$c('.ew-weburl').value}"}`
-									localStorage.setItem('ew', c);
+									if(localStorage){
+										localStorage.setItem('ew', c)
+									}
+									
 			                   }else{
 			                   		_this.alert('发送失败');
 			                   }
