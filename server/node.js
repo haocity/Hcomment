@@ -50,7 +50,7 @@ http.createServer(function(req, res){
            //db.query('CREATE TABLE IF NOT EXISTS `'+getobj.id+'`(`id` int(8) NOT NULL AUTO_INCREMENT,`user` char(30) NOT NULL, `email` char(40) NOT NULL,`weburl` char(40) DEFAULT NULL,`cid` char(20) NOT NULL,`time` char(30) NOT NULL,`text` text NOT NULL,PRIMARY KEY (`id`))');
            db.query('SELECT * FROM `'+getobj.id+'`ORDER BY `id`', function(err, rows, fields) {
            if (err){
-           	console.log(err)
+           	//console.log(err)
               res.end('{"code":400,"data":[]}');
             }
             var i=0;
