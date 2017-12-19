@@ -244,7 +244,7 @@ class Hco{
 			            if (XMLHttpReq.readyState == 4) {
 			                if (XMLHttpReq.status == 200) {
 			                   let t= JSON.parse(XMLHttpReq.responseText);
-			                   if(t.success){
+			                   if(t.code){
 			                   		_this.update(_this.now);
 									_this.alert('评论成功');
 									_this.$c('.ew-textarea').value='';

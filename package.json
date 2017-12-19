@@ -6,6 +6,7 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "md5": "^2.2.1",
+    "nodemailer": "^4.4.1",
     "webpack": "^2.6.1"
   },
   "devDependencies": {
