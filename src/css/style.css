@@ -19,6 +19,7 @@
 	padding: 10px 0;
 	font-weight: 500;
 	color: #565656;
+	border-top: .1rem solid #eee;
 }
 
 .ew-publish-title-lc {
@@ -33,34 +34,30 @@
 	margin-left: 30px;
 }
 
-.ew-publish-fly .ew-publish-back,.ew-publish-fly .ew-publish-title-lc {
+.ew-publish-fly .ew-publish-back, .ew-publish-fly .ew-publish-title-lc {
 	display: inline-block;
 }
 
-.ew-textarea-warp {
-			/*margin-left: 100px;*/
-	background-color: #fff;
-	border-radius: 12px;
-	padding: 6px;
-			/*background: #FFFFFF bottom right 20px no-repeat url(https://www.haotown.cn/changyan/3.png);*/
-			/*box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);*/
-	border: 1px solid #d0d0d0;
-}
+.ew-textarea-warp {}
 
 .ew-textarea {
+	background: #fafafa;
+	border: .1rem solid #eee;
+	border-radius: 2px;
+	padding: .6rem .8rem;
 	width: 100%;
-	height: 70px;
-	background: 0 0;
-	overflow-x: hidden;
-	overflow-y: auto;
-	border: 0;
-	font-size: 14px;
+	height: 110px;
+	font-size: 17px;
 	color: #333;
 	resize: none;
 	line-height: normal;
 	text-align: left;
 	outline: medium;
+	overflow-x: hidden;
+	overflow-y: auto;
+	box-sizing: border-box;
 }
+
 
 .ew-info {
 	margin-top: 20px;
@@ -69,11 +66,11 @@
 }
 
 .ew-info>.text-block {
-	height: 25px;
+	height: 36px;
 	width: 24%;
 	margin-right: 2%;
-	border: 1px solid #b5b5b5;
-	border-radius: 4px;
+	border: 1px solid #cccbcb;
+	border-radius: 3px;
 	padding: 0 4px;
 	outline: none;
 }
@@ -81,18 +78,18 @@
 .ew-info>.ew-send-btn {
 	position: absolute;
 	right: 0;
-	top: -4px;
-	width: 108px;
-    background-color: #3b9bf1;
+	top: -1px;
+	width: 140px;
+	background-color: #3b9bf1;
 	color: #fff;
 	text-align: center;
 	line-height: 40px;
-	font-size: 20px;
-	border-radius: 10px;
+	font-size: 18px;
 	cursor: pointer;
 }
 
 .ew-bar {
+	display: none;
 	background-color: #2483d8;
 	color: #FFFFFF;
 	margin-top: 10px;
@@ -115,12 +112,12 @@
 
 .ew-li-com-w>.ew-li-com {
 	margin-left: 90px;
-	font-family: Avenir Next,Helvetica,Arial,Lantinghei SC,Microsoft YaHei,sans-serif;
+	font-family: Avenir Next, Helvetica, Arial, Lantinghei SC, Microsoft YaHei, sans-serif;
 	word-wrap: break-word;
-    white-space: normal;
+	white-space: normal;
 }
 
-.ew-li-com-w>.ew-li-user,.ew-li-com-w>.ew-li-time {
+.ew-li-com-w>.ew-li-user, .ew-li-com-w>.ew-li-time {
 	display: inline-block;
 	color: #3a3a3a;
 	font-size: 15px;
@@ -150,11 +147,11 @@
 
 .ew-li-reply {
 	float: right;
-	color: #E88678;
+	color: #308cde;
 	cursor: pointer;
 	position: relative;
-    right: 10px;
-    bottom: 5px;
+	right: 10px;
+	bottom: 5px;
 }
 
 .ew-li-next {
@@ -183,32 +180,29 @@
 	from {
 		transform: scale3d(1, 1, 1);
 	}
-
 	10%, 20% {
 		transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
 	}
-
 	30%, 50%, 70%, 90% {
 		transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
 	}
-
 	40%, 60%, 80% {
 		transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
 	}
-
 	to {
 		transform: scale3d(1, 1, 1);
 	}
 }
+
 @media only screen and (min-width: 100px) and (max-width: 800px) {
-	.ew-info>.ew-send-btn{
+	.ew-info>.ew-send-btn {
 		position: relative;
 		top: 6px;
 		width: 100%;
-		box-shadow:none;
+		box-shadow: none;
 	}
-	.ew-info>.text-block{
-    	width: 28%;
-    	box-sizing: content-box;
+	.ew-info>.text-block {
+		width: 28%;
+		box-sizing: content-box;
 	}
 }
