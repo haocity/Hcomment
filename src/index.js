@@ -26,7 +26,7 @@ class Hco{
 			const ew=new Object;
 			this.now='father';
 			this.id=this.cid;
-			this.api='https://t5.haotown.cn/hcon';
+			this.api='https://api.haotown.cn/hcon';
 			this.publish=$c('.ew-publish');
 			//加载本地储存的信息
 			if (localStorage&&localStorage.getItem('ew')) {
