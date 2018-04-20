@@ -108,9 +108,9 @@ class Hco{
 		gettime(time){
 				let temp;
 				const nowdate=new Date();
-			  	const c=nowdate.getTimezoneOffset();
+			  
 				const nowtime=new Date().getTime();
-				let timed=nowtime-time-c*60000;
+				let timed=nowtime-time;
 				if(timed<60000){
 					temp='刚刚';
 				}else if(timed<60000*60){
