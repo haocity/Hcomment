@@ -114,9 +114,9 @@ class Hco{
 				if(timed<60000){
 					temp='刚刚';
 				}else if(timed<60000*60){
-					temp=new Date(timed).getMinutes()+'分钟前';
+					temp=parseInt(timed/(60000))+'分钟前';
 				}else if(timed<60000*60*24){
-					temp=new Date(timed).getHours()+'小时前';
+					temp=parseInt(timed/(60000*60))+'小时前';
 				}else{
 					let t=new Date(parseInt(time));
 					temp=t.getFullYear()+'年'+(t.getMonth()+1)+'月'+t.getDate()+'日'
